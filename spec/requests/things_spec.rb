@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe 'things', :type => :request do
+RSpec.describe 'things' do
   describe 'get things', :type => :request do
     before do
       get '/v1/things.json'

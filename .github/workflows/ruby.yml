@@ -7,14 +7,25 @@
 
 name: Ruby
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   test:
 
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+        - 32574:3306
+    
+
     steps:
+    - name: Verify MySQL connection from host
+      run: |
+        sudo apt-get install -y mysql-client
+        mysql --host 127.0.0.1 --port 32574 -uroot -e "SHOW DATABASES"
     - uses: actions/checkout@v2
     - name: Set up Ruby
     # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
