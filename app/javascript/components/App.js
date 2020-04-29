@@ -7,8 +7,7 @@ import configureStore from '../configureStore'
 
 const store = configureStore();
 
-class App extends React.Component {
-  render () {
+function App() {
     return (
       <Provider store={store}>
         <BrowserRouter>
@@ -19,7 +18,6 @@ class App extends React.Component {
         </BrowserRouter>
       </Provider>
     );
-  }
 }
 
 export default App

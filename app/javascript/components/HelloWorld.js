@@ -1,6 +1,6 @@
 import React from 'react';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 
 const GET_THINGS_REQUEST = 'GET_THINGS_REQUEST';
@@ -24,27 +24,21 @@ export function getThingsSuccess(json) {
   }
 }
 
+const HelloWorld = (props) => {
+  const things = useSelector(state => state.things)
+  const thingsList = things.map((thing) => {
+    return <li>{thing.name} {thing.guid}</li>
+  });
 
-class HelloWorld extends React.Component {
-  render () {
-    const { things } = this.props;
-    const thingsList = things.map((thing) => {
-      return <li>{thing.name} {thing.guid}</li>
-    });
-    return (
-      <React.Fragment>
-        Greeting : {this.props.greeting}
-        <button className='getThingsBtn' onClick={() => this.props.getThings()}>getThings</button>
-        <ul>{thingsList}</ul>
-      </React.Fragment>
-    )
-  }
+  const dispatch = useDispatch()
+
+  return (
+    <React.Fragment>
+      Greeting : {props.greeting}
+      <button className='getThingsBtn' onClick={() => dispatch(getThings())}>getThings</button>
+      <ul>{thingsList}</ul>
+    </React.Fragment>
+  )
 }
 
-const structuredSelector = createStructuredSelector({
-  things: state => state.things,
-});
-
-const mapDispatchToProps = { getThings };
-
-export default connect(structuredSelector, mapDispatchToProps)(HelloWorld);
+export default HelloWorld;

@@ -1,6 +1,14 @@
 {
   "name": "rails_react",
   "private": true,
+  "scripts": {
+    "test": "jest --verbose"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/app/javascript/__tests__/"
+    ]
+  },
   "dependencies": {
     "@babel/preset-react": "^7.9.4",
     "@rails/actioncable": "^6.0.0",
@@ -22,6 +30,11 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^25.5.0",
+    "jest-enzyme": "^7.1.2",
+    "redux-mock-store": "^1.5.4",
     "webpack-dev-server": "^3.10.3"
   }
 }
