@@ -1,6 +1,14 @@
 {
   "name": "rails_react",
   "private": true,
+  "scripts": {
+    "test": "jest --verbose --setupFiles ./app/javascript/setupTests.js"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/app/javascript/__tests__/"
+    ]
+  },
   "dependencies": {
     "@babel/preset-react": "^7.9.4",
     "@rails/actioncable": "^6.0.0",
@@ -8,14 +16,25 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "babel-polyfill": "^6.26.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
     "react_ujs": "^2.6.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^25.5.0",
+    "jest-enzyme": "^7.1.2",
+    "redux-mock-store": "^1.5.4",
     "webpack-dev-server": "^3.10.3"
   }
 }
