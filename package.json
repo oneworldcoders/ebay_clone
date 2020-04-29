@@ -2,7 +2,7 @@
   "name": "rails_react",
   "private": true,
   "scripts": {
-    "test": "jest --verbose"
+    "test": "jest --verbose --setupFiles ./app/javascript/setupTests.js"
   },
   "jest": {
     "roots": [

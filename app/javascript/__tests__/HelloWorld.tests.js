@@ -1,9 +1,8 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 import configureMockStore from 'redux-mock-store'
 import HelloWorld from '../components/HelloWorld';
 import { Provider } from 'react-redux'
-import '../setupTests';
 
 
 describe('HelloWorld', () => {
