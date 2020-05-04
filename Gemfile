@@ -16,7 +16,7 @@ gem 'react-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Postgres database
-gem ''
+gem 'pg'
 # Testing
 gem 'rspec-rails', '~> 3.8'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -34,9 +34,15 @@ gem 'rspec-rails', '~> 3.8'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+# Authentication 
+gem 'devise-jwt', '~> 0.6.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'faker'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
   # Use sqlite3 as the database for Active Record
   # gem 'sqlite3'
 end

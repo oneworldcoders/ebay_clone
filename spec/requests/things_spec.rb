@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'rails_helper'
 
 RSpec.describe 'things' do
   describe 'get things', :type => :request do
