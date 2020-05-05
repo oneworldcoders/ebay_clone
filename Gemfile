@@ -35,6 +35,7 @@ gem 'rspec-rails', '~> 3.8'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # Authentication 
+gem 'devise'
 gem 'devise-jwt', '~> 0.6.0'
 
 group :development, :test do

@@ -274,6 +274,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   database_cleaner
+  devise
   devise-jwt (~> 0.6.0)
   factory_bot_rails
   faker
