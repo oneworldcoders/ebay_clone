@@ -34,6 +34,8 @@ gem 'rspec-rails', '~> 3.8'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+gem 'dotenv-rails', groups: [:development, :test]
+
 # Authentication 
 gem 'devise'
 gem 'devise-jwt', '~> 0.6.0'
