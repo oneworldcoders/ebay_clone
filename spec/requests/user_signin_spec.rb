@@ -11,20 +11,21 @@ RSpec.describe 'user' do
 
     before(:each) do
       @user = {
-        firstname: 'Emma',
-        lastname: 'Omona',
         email: 'emma@gmail.com',
         password: 'password'
-    }
+      }
+      User.create(@user)
+      post user_session_path, params: @user
     end
 
     context 'succesful' do
       it 'returns an OK response status' do
-        User.create(@user)
-        post '/login', params: @user
         expect(response).to have_http_status(200)
-        p 'these are the headers'
-        p response.headers["Set-Cookie"]
+      end
+
+      it 'returns a token' do
+        expected = JSON.parse(response.body)['token']
+        expect(expected).not_to be_nil
       end
   
     end
