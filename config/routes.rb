@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   namespace :v1, defaults: { format: 'json' } do
     get 'things', to: 'things#index'
     post 'signup', to: 'user#create'
+    delete 'logout', to: 'user#logout'
     # devise_for :users,
     #           path: '',
     #           path_names: {
