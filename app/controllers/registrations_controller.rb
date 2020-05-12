@@ -1,5 +1,6 @@
 class RegistrationsController < Devise::SessionsController
   respond_to :json
+  skip_before_action :authenticate_user
 
   def create
     user = User.new(user_params)
@@ -8,7 +9,7 @@ class RegistrationsController < Devise::SessionsController
       render json: user, status: 201
 
     else
-      render json: user.errors, status: 500
+      render json: {errors: user.errors.full_messages }, status: 500
     end
   end
 

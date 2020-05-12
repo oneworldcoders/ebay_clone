@@ -15,7 +15,7 @@ RSpec.describe 'user' do
         lastname: 'Omona',
         email: 'emma@gmail.com',
         password: 'password'
-      }
+    }
     end
 
     context 'succesful' do
@@ -52,7 +52,7 @@ RSpec.describe 'user' do
   
       it 'returns an error message for duplicate users' do
         post '/signup', params: @user
-        expected = { email: ["has already been taken"] }.to_json
+        expected = { errors: ["Email has already been taken"] }.to_json
         expect(response.body).to eq(expected)
       end
     end

@@ -1,21 +1,22 @@
 import React from 'react';
 import { mount } from 'enzyme'
 import configureMockStore from 'redux-mock-store'
-import HelloWorld from '../components/HelloWorld';
 import { Provider } from 'react-redux'
+import SignupForm from '../../components/Signup/SignupForm';
 
 
-describe('HelloWorld', () => {
+describe('SignupForm', () => {
   let wrapper;
   beforeEach(() => {
     const middlewares = []
     const mockStore = configureMockStore(middlewares)
-    const initialState = { thingsReducer: { things: [] } }
+    const initialState = { }
     const store = mockStore(initialState)
-    wrapper = mount(<Provider store={store}><HelloWorld /></Provider>)
+    wrapper = mount(<Provider store={store}><SignupForm /></Provider>)
   });
 
-  test('renders a button element', () => {
-    expect(wrapper.find('button').length).toBe(1)
-  });
+  xit('', () => {
+
+  })
+
 });

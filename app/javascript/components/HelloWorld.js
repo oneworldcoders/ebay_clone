@@ -1,16 +1,22 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
+import Cookies from 'universal-cookie';
 
-
+const cookies = new Cookies();
 const GET_THINGS_REQUEST = 'GET_THINGS_REQUEST';
 const GET_THINGS_SUCCESS = 'GET_THINGS_SUCCESS';
 
 function getThings() {
-  console.log('Get things Action');
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${cookies.get('token')}`
+  }
+  console.log(headers);
+  
   return dispatch => {
     dispatch({ type: GET_THINGS_REQUEST })
-    return fetch('v1/things.json')
+    return fetch('v1/things.json', {headers})
       .then(response => response.json())
       .then(json => {dispatch(getThingsSuccess(json))})
       .catch(error => console.log(error))
@@ -25,10 +31,12 @@ export function getThingsSuccess(json) {
 }
 
 const HelloWorld = (props) => {
-  const things = useSelector(state => state.things)
+  const things = useSelector(state => state.thingsReducer.things)
   const thingsList = things.map((thing) => {
-    return <li>{thing.name} {thing.guid}</li>
+    return <li key={thing.name}>{thing.name} {thing.guid}</li>
   });
+
+  console.log('things', things)
 
   const dispatch = useDispatch()
 

@@ -1,0 +1,16 @@
+.mini-banner{
+  margin-top: 3rem;
+  height: 15rem;
+  width: 100%;
+}
+.large-banner{
+  height: 30rem;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+.welcome-txt{
+  width: 15rem;
+  margin: auto;
+  margin-top: 2rem;
+}
