@@ -36,7 +36,6 @@ describe('signupAction', () => {
     fetch.mockResponseOnce(JSON.stringify(signupData))
 
     const expectedActions = [
-      { type: SIGNUP_REQUEST },
       { type: SIGNUP_SUCCESS, json: signupData}
     ]
 
@@ -57,7 +56,6 @@ describe('signupAction', () => {
     fetch.mockResponseOnce(JSON.stringify(error))
 
     const expectedActions = [
-      { type: SIGNUP_REQUEST },
       { type: SIGNUP_FAILURE, error: error.errors }
     ]
 

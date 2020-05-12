@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signupAction } from "../../actions/signupAction";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import "./SignupForm.css";
 
 
@@ -11,13 +11,10 @@ function SignupForm() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const signupStatus = useSelector(state => state.signupReducer.signup)
-  const isSigned = useSelector(state => state.signupReducer.signedup)
+  const signupError = useSelector(state => state.signupReducer.signuperror)
 
-  // console.log('isSigned', isSigned);
-  // console.log('signupStatus', signupStatus);
-  
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -41,21 +38,18 @@ function SignupForm() {
       email,
       password,
     };
-    console.log('signup data', signup_data);
-    console.log('stringified data', JSON.stringify(signup_data))
-    dispatch(signupAction(signup_data))
+    dispatch(signupAction(signup_data, history))
 
   };
 
   return (
     <>
       <div className="container">
-        { isSigned && <Redirect to='/' />}
-        { signupStatus &&
+        { signupError &&
         <div className="col-md-12 form">
           <div className="col-sm-9">
             <div className="alert alert-danger" role="alert">
-              {signupStatus[0]}
+              {signupError[0]}
             </div>
           </div>
         </div>

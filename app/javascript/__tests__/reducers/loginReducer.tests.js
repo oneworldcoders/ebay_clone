@@ -1,5 +1,6 @@
 import loginReducer from "../../reducers/loginReducer";
-import { LOGIN_SUCCESS } from "../../actions/types";
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS, LOGIN_FAILURE } from "../../actions/types";
+import { INITIAL_STATE } from "../../configureStore";
 
 describe("login reducer", () => {
   let action;
@@ -26,11 +27,27 @@ describe("login reducer", () => {
   });
 });
 
+describe("logout", () => {
+  let action;
+  beforeEach(() => {
+    action = {
+      type: LOGOUT_SUCCESS
+    };
+  });
+
+  it("resets to the initial state", () => {
+    const newState = loginReducer({}, action);
+    expect(newState).toEqual({state: INITIAL_STATE});
+  });
+
+});
+
+
 describe("login reducer failure", () => {
   let action;
   beforeEach(() => {
     action = {
-      type: 'LOGIN_FAILURE',
+      type: LOGIN_FAILURE,
       error: 'login failed'
     };
   });

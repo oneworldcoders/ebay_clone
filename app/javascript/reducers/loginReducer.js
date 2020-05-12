@@ -1,5 +1,5 @@
 import { INITIAL_STATE } from "../configureStore";
-import { LOGIN_SUCCESS, LOGIN_FAILURE } from "../actions/types";
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } from "../actions/types";
 
 export default function(state = {}, action) {
   switch (action.type) {    
@@ -16,7 +16,7 @@ export default function(state = {}, action) {
         ...state,
         login: action.error
       }
-    case 'RESET_REQUEST':
+    case LOGOUT_SUCCESS:
       return {
         state: INITIAL_STATE
       }

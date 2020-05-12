@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Header.css";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -12,16 +12,12 @@ function Header() {
   const isLoggedIn = useSelector(state => state.loginReducer.loggedin)
   const userdata = useSelector(state => state.loginReducer.userdata)
 
-  const isLoggedOut = useSelector(state => state.signoutReducer.loggedout)
-  
   const dispatch = useDispatch()
-
-  console.log('userdata', userdata);
+  const history = useHistory()
 
   if(isLoggedIn){
     return(
       <div className="header container">
-         { isLoggedOut && <Redirect to='/signup' />}
         <div className="ebay">
           <Link to="/" className="navlink">
             EBay
@@ -31,7 +27,7 @@ function Header() {
           <Link to="/login" className="navlink">
             <span id='username'>{ userdata.firstname }</span>
           </Link>
-          <span className="navlink clickable" onClick={()=>{dispatch(resetStateAction())}}>
+          <span className="navlink clickable" onClick={()=>{dispatch(resetStateAction(history))}}>
             Signout 
           </span>
           {/* <Link to="/about" className="navlink">

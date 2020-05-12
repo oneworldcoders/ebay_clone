@@ -6,10 +6,8 @@ import HelloWorld from "../../components/HelloWorld";
 // import ebayCart from "../../assets/images/ebay-cart.png";
 
 function LandingPage() {
-  const signupStatus = useSelector(state => state.signup)
+  const signupStatus = useSelector(state => state.signupReducer.signup)
 
-  console.log("Landing page is rendered");
-  
   return (
     <div className="container">
       <div>
