@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import loginReducer from './reducers/loginReducer'
 import signupReducer from './reducers/signupReducer'
-import signoutReducer from './reducers/signoutReducer'
 import thunk from 'redux-thunk'
 import Cookies from 'universal-cookie';
 
@@ -22,6 +21,7 @@ export const INITIAL_STATE = {
   },
   signupReducer: {
     signup: null,
+    signuperror: null,
     signedup: false
   }
 };
@@ -41,7 +41,6 @@ const thingsReducer = (state = {}, action) => {
 const rootReducer = combineReducers({
   loginReducer,
   signupReducer,
-  signoutReducer,
   thingsReducer
 })
 

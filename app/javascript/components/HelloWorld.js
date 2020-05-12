@@ -36,8 +36,6 @@ const HelloWorld = (props) => {
     return <li key={thing.name}>{thing.name} {thing.guid}</li>
   });
 
-  console.log('things', things)
-
   const dispatch = useDispatch()
 
   return (

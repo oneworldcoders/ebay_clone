@@ -1,5 +1,4 @@
 import { SIGNUP_SUCCESS, SIGNUP_FAILURE } from "../actions/types";
-import { INITIAL_STATE } from "../configureStore";
 
 export default function(state = {}, action) {
   switch (action.type) {
@@ -12,7 +11,7 @@ export default function(state = {}, action) {
     case SIGNUP_FAILURE:
       return {
         ...state,
-        signup: action.error
+        signuperor: action.error
       }
     default:
       return state;

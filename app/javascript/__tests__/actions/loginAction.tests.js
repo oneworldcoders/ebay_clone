@@ -4,7 +4,7 @@ enableFetchMocks()
 import { loginAction, loginSuccess, loginFailure } from "../../actions/loginAction";
 import thunk from 'redux-thunk'
 import configureMockStore from 'redux-mock-store'
-import { LOGIN_SUCCESS } from '../../actions/types';
+import { LOGIN_SUCCESS, LOGIN_FAILURE } from '../../actions/types';
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
@@ -26,7 +26,7 @@ describe('loginAction', () => {
   it('loginFailure returns a failure type', () => {
     const data = { email: 'email' }
     const actual = loginFailure(data)
-    const expected = { type: 'LOGIN_FAILURE', error: data }
+    const expected = { type: LOGIN_FAILURE, error: data }
     expect(actual).toEqual(expected)
   });
 
@@ -36,13 +36,12 @@ describe('loginAction', () => {
     fetch.mockResponseOnce(JSON.stringify(loginData))
 
     const expectedActions = [
-      { type: 'LOGIN_REQUEST' },
       { type: LOGIN_SUCCESS, json: loginData}
     ]
 
     const store = mockStore()
 
-    store.dispatch(loginAction(loginData)).then(() => {
+    store.dispatch(loginAction(loginData, jest.fn())).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
@@ -57,13 +56,12 @@ describe('loginAction', () => {
     fetch.mockResponseOnce(JSON.stringify(error))
 
     const expectedActions = [
-      { type: 'LOGIN_REQUEST' },
-      { type: 'LOGIN_FAILURE', error: error.errors }
+      { type: LOGIN_FAILURE, error: error.errors }
     ]
 
     const store = mockStore()
 
-    store.dispatch(loginAction(loginData)).then(() => {
+    store.dispatch(loginAction(loginData, jest.fn())).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 

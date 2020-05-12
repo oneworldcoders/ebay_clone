@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../actions/loginAction";
-import { Redirect } from "react-router-dom";
-import Cookies from 'universal-cookie';
+import { useHistory } from "react-router-dom";
 
 import "./LoginForm.css";
 
@@ -11,11 +10,9 @@ function LoginForm() {
   const [password, setPassword] = useState();
 
   const loginStatus = useSelector(state => state.loginReducer.login)
-  const isLoggedIn = useSelector(state => state.loginReducer.loggedin)
-  const userData = useSelector(state => state.loginReducer.userdata)
-  const token = useSelector(state => state.loginReducer.token)
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onEmailChange = (event) => {
     setEmail(event.target.value);
@@ -31,14 +28,12 @@ function LoginForm() {
       email,
       password,
     };
-    dispatch(loginAction(login_data))
+    dispatch(loginAction(login_data, history))
   };
 
-  console.log('isLoggedIn', isLoggedIn)
   return (
     <>
       <div className="container">
-      { isLoggedIn && setCookies(isLoggedIn, userData, token) && <Redirect to='/' />}
         { loginStatus &&
         <div className="col-md-12 form">
           <div className="col-sm-9">
@@ -91,14 +86,6 @@ function LoginForm() {
       </div>
     </>
   );
-}
-
-const setCookies = (isLoggedIn, userData, token) => {
-  const cookies = new Cookies()
-  cookies.set('isLoggedIn', isLoggedIn, { path: '/'})
-  cookies.set('token', token, { path: '/'})
-  cookies.set('userdata', userData, { path: '/'})
-  return true;
 }
 
 export default LoginForm;

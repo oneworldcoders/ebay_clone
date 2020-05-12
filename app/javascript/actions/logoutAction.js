@@ -1,15 +1,11 @@
-import { SIGNOUT_REQUEST, SIGNOUT_SUCCESS, SIGNOUT_FAILURE } from './types';
+import { LOGOUT_SUCCESS, LOGOUT_FAILURE } from './types';
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-export function resetStateAction() {
+export function resetStateAction(history) {
   return (dispatch) => {
-    console.log('resetAction');
-    
-    // dispatch({ type: SIGNOUT_REQUEST })
     Object.keys(cookies.getAll()).forEach((cookie) => {
-      console.log('deleted ' + cookie);
       cookies.remove(cookie)
     })
     const logout_data = ''
@@ -23,6 +19,7 @@ export function resetStateAction() {
       body: JSON.stringify(logout_data)
     }
     dispatch(logoutSuccess())
+    history.push('/login')
     // return fetch('/logout', fetchData)
     //   .then(response => response.json())
     //   .then(json => {
@@ -40,12 +37,12 @@ export function resetStateAction() {
 }
 
 export function logoutSuccess(){
-  return { type: SIGNOUT_SUCCESS }
+  return { type: LOGOUT_SUCCESS }
 }
 
 export function logoutFailure(error){
   return {
-    type: SIGNOUT_FAILURE,
+    type: LOGOUT_FAILURE,
     error
   }
 }

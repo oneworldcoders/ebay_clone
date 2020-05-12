@@ -1,8 +1,9 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "./types";
+import { LOGIN_SUCCESS, LOGIN_FAILURE } from "./types";
+import Cookies from 'universal-cookie';
 
-export function loginAction(login_data) {
+
+export function loginAction(login_data, history) {
   return (dispatch) => {
-    dispatch({ type: LOGIN_REQUEST })
     const fetchData = {
       method: 'POST',
       headers: {
@@ -16,7 +17,9 @@ export function loginAction(login_data) {
       .then(json => {
         console.log(json);
         if (!json.errors) {
+          setCookies(json.user, json.token) 
           dispatch(loginSuccess(json))
+          history.push('/')
         } else {
           dispatch(loginFailure(json.errors))
         }
@@ -40,3 +43,10 @@ export function loginFailure(error) {
     error
   }
 };
+
+const setCookies = (userData, token) => {
+  const cookies = new Cookies()
+  cookies.set('token', token, { path: '/'})
+  cookies.set('userdata', userData, { path: '/'})
+  return true;
+}
