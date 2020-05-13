@@ -8,6 +8,7 @@ import LoginForm from '../../components/Login/LoginForm';
 
 jest.mock('../../actions/loginAction')
 import { loginAction } from '../../actions/loginAction';
+import { BrowserRouter } from 'react-router-dom';
 
 
 describe('LoginForm', () => {
@@ -22,7 +23,7 @@ describe('LoginForm', () => {
     mockStore = configureMockStore(middlewares)
     initialState = { loginReducer: {} }
     store = mockStore(initialState)
-    wrapper = mount(<Provider store={store}><LoginForm /></Provider>)
+    wrapper = mount(<Provider store={store}><BrowserRouter><LoginForm /></BrowserRouter></Provider>)
   });
 
   xit('submits login data . . .', () => {

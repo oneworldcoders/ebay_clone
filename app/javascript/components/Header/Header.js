@@ -24,9 +24,7 @@ function Header() {
           </Link>
         </div>
         <div className="auth">
-          <Link to="/login" className="navlink">
-            <span id='username'>{ userdata.firstname }</span>
-          </Link>
+          <span id='username' className='clickable'>{ userdata.firstname }</span>
           <span className="navlink clickable" onClick={()=>{dispatch(resetStateAction(history))}}>
             Signout 
           </span>

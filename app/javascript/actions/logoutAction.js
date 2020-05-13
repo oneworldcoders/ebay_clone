@@ -14,16 +14,13 @@ export function resetStateAction(history) {
         'Authorization': `Bearer ${cookies.get('token')}`
       }
     }
-    
-    Object.keys(cookies.getAll()).forEach((cookie) => {
-      cookies.remove(cookie)
-    })
    
     return fetch('/v1/logout', fetchData)
       .then(response => response.json())
       .then(json => {
         console.log(json);
         if (!json.errors) {
+          clearCookies()
           dispatch(logoutSuccess())
           history.push('/login')
         } else {
@@ -34,6 +31,12 @@ export function resetStateAction(history) {
         console.log(error)
       })
   }
+}
+
+function clearCookies() {
+  Object.keys(cookies.getAll()).forEach((cookie) => {
+    cookies.remove(cookie)
+  })
 }
 
 export function logoutSuccess(){
