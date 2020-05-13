@@ -25,12 +25,6 @@ function LandingPage() {
       
         <div className="col-md-12 form">
           <div className="col-sm-9">
-            { signupStatus &&
-              <div className="alert alert-success" role="alert">
-                {JSON.stringify(signupStatus)}
-              </div>
-            }
-
             This is the landing Page
             <div>
             <HelloWorld />

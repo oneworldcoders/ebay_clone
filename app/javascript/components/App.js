@@ -8,6 +8,8 @@ import SignupPage from "../containers/SignupPage/SignupPage"
 import LandingPage from "../containers/LandingPage/LandingPage"
 import Header from "./Header/Header"
 import LoginPage from "../containers/LoginPage/LoginPage"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
@@ -25,6 +27,7 @@ function App() {
             <Route exact path='/hello' render={() => <HelloWorld greeting="Friend" />} />
           </Switch>
         </BrowserRouter>
+        <ToastContainer />
       </Provider>
     );
 }
