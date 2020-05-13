@@ -3,6 +3,7 @@ import loginReducer from './reducers/loginReducer'
 import signupReducer from './reducers/signupReducer'
 import thunk from 'redux-thunk'
 import Cookies from 'universal-cookie';
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const cookies = new Cookies();
 
@@ -45,5 +46,5 @@ const rootReducer = combineReducers({
 })
 
 export default function configureStore() {
-  return createStore(rootReducer, INITIAL_STATE, applyMiddleware(thunk));
+  return createStore(rootReducer, INITIAL_STATE, composeWithDevTools(applyMiddleware(thunk)));
 }

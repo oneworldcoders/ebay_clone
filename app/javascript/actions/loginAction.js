@@ -48,5 +48,6 @@ const setCookies = (userData, token) => {
   const cookies = new Cookies()
   cookies.set('token', token, { path: '/'})
   cookies.set('userdata', userData, { path: '/'})
+  cookies.set('isLoggedIn', true, { path: '/'})
   return true;
 }
