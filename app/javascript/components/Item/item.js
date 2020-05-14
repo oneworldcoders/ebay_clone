@@ -27,19 +27,27 @@ export default function Item(props) {
   return (
     <Card className={classes.root}>
       <CardHeader
-        title={props.title || 'Title'}
-        subheader={props.subheader || 'Sub-header'}
+        title={props.title}
+        subheader={props.subheader}
       />
       <CardMedia
         className={classes.media}
-        image={props.imageUrl || "https://res.cloudinary.com/opix/image/upload/v1553531583/samples/cloudinary-icon.png"}
-        title={props.imageTitle || 'Image Title'}
+        image={props.imageUrl}
+        title={props.imageTitle}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {props.description || 'Item description'}
+          {props.description}
         </Typography>
       </CardContent>
     </Card>
   );
 }
+
+Item.defaultProps = {
+  title: 'Title',
+  subheader: 'Sub-header',
+  imageUrl: "https://res.cloudinary.com/opix/image/upload/v1553531583/samples/cloudinary-icon.png",
+  imageTitle: 'Image Title',
+  description: 'Item description'
+};
