@@ -1,13 +1,12 @@
 import React from "react";
-import { useSelector } from 'react-redux'
 import ebayBanner from "../../assets/images/ebay-banner-mini.png";
 import "./LandingPage.css";
 import HelloWorld from "../../components/HelloWorld";
+import Item from "../../components/Item/item";
 // import ebayCart from "../../assets/images/ebay-cart.png";
 
-function LandingPage() {
-  const signupStatus = useSelector(state => state.signupReducer.signup)
 
+function LandingPage() {
   return (
     <div className="container">
       <div>
@@ -28,8 +27,12 @@ function LandingPage() {
             This is the landing Page
             <div>
             <HelloWorld />
+            
             </div>
           </div>
+          <div className="item-container">
+              <Item /><Item /><Item /><Item /><Item /><Item /> <Item /><Item /><Item /><Item /><Item /><Item />
+            </div>
         </div>
       </div>
     </div>
