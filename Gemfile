@@ -15,6 +15,10 @@ gem 'webpacker', '~> 4.0'
 gem 'react-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
+# Postgres database
+gem 'pg'
+# Testing
+gem 'rspec-rails', '~> 3.8'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Testing

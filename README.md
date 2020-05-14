@@ -1,5 +1,9 @@
 # README
 
+![Ruby](https://github.com/oneworldcoders/ebay_clone/workflows/Ruby/badge.svg)
+
+![Node.js CI](https://github.com/oneworldcoders/ebay_clone/workflows/Node.js%20CI/badge.svg)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
