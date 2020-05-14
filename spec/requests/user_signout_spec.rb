@@ -1,46 +1,47 @@
 require 'rails_helper'
 
-RSpec.describe 'user' do
+describe 'user sign out', :type => :request do
 
-  describe 'signout', :type => :request do
-
-    DatabaseCleaner.strategy = :truncation
-    after(:each) do
-      DatabaseCleaner.clean
-    end
-
-    before(:each) do
-      @user = {
-        firstname: 'Emma',
-        lastname: 'Omona',
-        email: 'emma@gmail.com',
-        password: 'password'
-    }
-    end
-
-    context 'succesful' do
-      xit 'returns an OK response status' do
-        # login
-        User.create(@user)
-        post '/login', params: @user
-        token = JSON.parse(response.body)['token']
-        expect(response).to have_http_status(200)
-        session = response.headers["Set-Cookie"]
-
-        # able to access protected endpoitnt
-        get '/v1/things', params: {}, headers: { 'Authorization' =>  "Bearer #{token}", "Set-Cookie" => session}
-        # expect(response).to have_http_status(200)
-
-        # logout
-        delete '/logout', params: @user, headers: { 'Authorization' => "Bearer #{token}", "Set-Cookie" => session}
-        p response.body
-        expect(response).to have_http_status(200)
-
-        # unable to access protected endpoitnt
-        # get '/v1/things.json', params: {}, headers: { 'Authorization' =>  "Bearer #{token}"}
-        # expect(response).to have_http_status(401)
-      end
-  
-    end
+  DatabaseCleaner.strategy = :truncation
+  after(:each) do
+    DatabaseCleaner.clean
   end
-end
+
+  before(:each) do
+    user = {
+      email: 'email@email.com',
+      password: 'password'
+    }
+
+    User.create(user)
+    post user_session_path, params: user
+    @token = JSON.parse(response.body)['token']
+    @header = { 'Authorization': "Bearer #{@token}" }
+  end
+
+  it 'adds the token to the blacklist table' do
+    delete signout_path, params: {}, headers: @header
+    expected = JwtBlacklist.exists?(jti: @token)
+    expect(expected).to be_truthy
+  end
+
+  it 'returns a success code' do
+    delete signout_path, params: {}, headers: @header
+    expect(response).to have_http_status(200)
+  end
+
+  it 'returns a success meeage' do
+    delete signout_path, params: {}, headers: @header
+    expected = { message: 'user successfully signed out' }.to_json
+    expect(response.body).to eq(expected)
+  end
+
+  it 'cannot access protected endpoints after logout' do
+    get v1_products_path, params: {}, headers: @header
+    expect(response).to have_http_status(200)
+
+    delete signout_path, params: {}, headers: @header
+    get v1_products_path, params: {}, headers: @header
+    expect(response).to have_http_status(401)
+  end  
+end 

@@ -16,7 +16,7 @@ RSpec.describe 'things' do
 
   describe 'get things', :type => :request do
     before do
-      get v1_things_path, params: {}, headers: { 'Authorization': "Bearer #{@token}}" }
+      get v1_products_path, params: {}, headers: { 'Authorization': "Bearer #{@token}}" }
     end
 
     it 'returns an ok status' do
@@ -24,7 +24,7 @@ RSpec.describe 'things' do
     end
 
     it 'unauthorized if invalid token' do
-      get v1_things_path, params: {}, headers: { 'Authorization': "Bearer 123}" }
+      get v1_products_path, params: {}, headers: { 'Authorization': "Bearer 123}" }
       expect(response).to have_http_status(401)
     end
   end

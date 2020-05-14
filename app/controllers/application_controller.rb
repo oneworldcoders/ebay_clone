@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
   before_action :authenticate_user
+  
+  def token_blacklisted?(token)
+    JwtBlacklist.exists?(jti: token)
+  end
 
   private
   def authenticate_user
@@ -9,7 +13,7 @@ class ApplicationController < ActionController::Base
       authenticate_or_request_with_http_token do |token|
         begin
           head :unauthorized if token_blacklisted?(token)
-          jwt_payload = JWT.decode(token, Rails.application.secrets.secret_key_base).first
+          JWT.decode(token, Rails.application.secrets.secret_key_base).first
 
         rescue JWT::DecodeError #JWT::ExpiredSignature, JWT::VerificationError
           head :unauthorized
@@ -18,10 +22,6 @@ class ApplicationController < ActionController::Base
     else
      head :unauthorized
     end
-  end
-
-  def token_blacklisted?(token)
-    JwtBlacklist.exists?(jti: token)
   end
 
 end

@@ -3,28 +3,17 @@ Rails.application.routes.draw do
               path: '',
               path_names: {
                 sign_in: 'login',
-                sign_out: 'logout',
                 registration: 'signup'
               },
               controllers: {
                 sessions: 'sessions',
                 registrations: 'registrations'
               }
+
+  delete 'signout', to: 'user#logout'
+
   namespace :v1, defaults: { format: 'json' } do
-    get 'things', to: 'things#index'
-    post 'signup', to: 'user#create'
-    delete 'logout', to: 'user#logout'
-    # devise_for :users,
-    #           path: '',
-    #           path_names: {
-    #             sign_in: 'login',
-    #             sign_out: 'logout',
-    #             registration: 'signup'
-    #           },
-    #           controllers: {
-    #             sessions: 'sessions',
-    #             registrations: 'registrations'
-    #           }
+    get 'products', to: 'products#index'
   end
 
   get '*page', to: 'static#index', constraints: ->(req) do

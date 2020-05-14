@@ -11,6 +11,7 @@ RSpec.describe 'user' do
 
     before do
       @user = {
+        firstname: 'Emmanuel',
         email: 'emma@gmail.com',
         password: 'password'
     }
@@ -27,9 +28,9 @@ RSpec.describe 'user' do
         expect(expected).to be_truthy
       end
 
-      it 'returns the user' do
+      it 'returns the users firstname' do
         actual = JSON.parse(response.body)
-        expect(actual['email']).to eq(@user[:email])
+        expect(actual['firstname']).to eq(@user[:firstname])
       end
     end
     
