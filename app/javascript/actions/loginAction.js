@@ -2,7 +2,7 @@ import { LOGIN_SUCCESS, LOGIN_FAILURE } from "./types";
 import Cookies from 'universal-cookie';
 
 
-export function loginAction(login_data, history) {
+export function loginAction(login_data) {
   return (dispatch) => {
     const fetchData = {
       method: 'POST',
@@ -19,7 +19,6 @@ export function loginAction(login_data, history) {
         if (!json.errors) {
           setCookies(json.user, json.token) 
           dispatch(loginSuccess(json))
-          history.push('/')
         } else {
           dispatch(loginFailure(json.errors))
         }

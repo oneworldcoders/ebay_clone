@@ -33,7 +33,7 @@ export function resetStateAction(history) {
   }
 }
 
-function clearCookies() {
+export function clearCookies() {
   Object.keys(cookies.getAll()).forEach((cookie) => {
     cookies.remove(cookie)
   })

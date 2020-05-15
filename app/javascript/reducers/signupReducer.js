@@ -6,7 +6,8 @@ export default function(state = {}, action) {
       return { 
         ...state,
         signup: 'signup succesful',
-        signedup: true
+        signedup: true,
+        home: true
       }
     case SIGNUP_FAILURE:
       return {

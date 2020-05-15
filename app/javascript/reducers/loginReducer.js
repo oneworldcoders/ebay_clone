@@ -9,6 +9,7 @@ export default function(state = {}, action) {
         login: 'login succesful',
         userdata: action.json.user,
         token: action.json.token,
+        home: true,
         loggedin: true
       }
     case LOGIN_FAILURE:

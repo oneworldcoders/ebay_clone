@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../actions/loginAction";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import "./LoginForm.css";
 
@@ -10,9 +10,9 @@ function LoginForm() {
   const [password, setPassword] = useState();
 
   const loginStatus = useSelector(state => state.loginReducer.login)
+  const redirect = useSelector(state => state.loginReducer.home)
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const onEmailChange = (event) => {
     setEmail(event.target.value);
@@ -28,8 +28,13 @@ function LoginForm() {
       email,
       password,
     };
-    dispatch(loginAction(login_data, history))
+
+    dispatch(loginAction(login_data))
   };
+
+  if (redirect) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <>
@@ -49,6 +54,7 @@ function LoginForm() {
               <div className="form-group row">
                 <div className="col-sm-9">
                   <input
+                    id='email'
                     type="text"
                     required
                     className="form-control form-control-lg"
@@ -61,6 +67,7 @@ function LoginForm() {
               <div className="form-group row">
                 <div className="col-sm-9">
                   <input
+                    id='password'
                     type="password"
                     className="form-control form-control-lg"
                     placeholder="Password"

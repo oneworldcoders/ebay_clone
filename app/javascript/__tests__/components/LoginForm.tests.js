@@ -1,35 +1,49 @@
 import React from 'react';
 import { mount } from 'enzyme'
-import configureMockStore from 'redux-mock-store'
-// import HelloWorld from '../components/HelloWorld';
 import { Provider } from 'react-redux'
 import LoginForm from '../../components/Login/LoginForm';
+import { BrowserRouter } from 'react-router-dom';
 
+import thunk from 'redux-thunk'
+import configureStore from 'redux-mock-store'
 
 jest.mock('../../actions/loginAction')
 import { loginAction } from '../../actions/loginAction';
-import { BrowserRouter } from 'react-router-dom';
+loginAction.mockReturnValue({type: ''})
 
 
 describe('LoginForm', () => {
   let wrapper;
-  let middlewares;
   let mockStore;
   let initialState;
   let store;
 
   beforeEach(() => {
-    middlewares = []
-    mockStore = configureMockStore(middlewares)
+    mockStore = configureStore([thunk])
     initialState = { loginReducer: {} }
     store = mockStore(initialState)
     wrapper = mount(<Provider store={store}><BrowserRouter><LoginForm /></BrowserRouter></Provider>)
   });
 
-  xit('submits login data . . .', () => {
-    // wrapper.find('form').simulate('submit', { preventDefault: ()=>{} })
+  it('loginAction to have been called by submit', () => {
     wrapper.find('form').simulate('submit', { preventDefault: () => {} })
-    expect(mockStore.dispatch).toHaveBeenCalledWith(loginAction());
-    // expect(loginAction).toHaveBeenCalled()
+    expect(loginAction).toHaveBeenCalled()
+  });
+
+  it('submits empty login data', () => {
+    wrapper.find('form').simulate('submit', { preventDefault: () => {} })
+    const loginData = { email: undefined, password: undefined };
+    expect(loginAction).toHaveBeenCalledWith(loginData)
+  });
+
+  it('submits login data', () => {
+    let emailField = wrapper.find('#email');
+    let passwordField = wrapper.find('#password');
+
+    emailField.simulate('change', { target: { value: 'email@email.com' } })
+    passwordField.simulate('change', { target: { value: 'password' } })
+    wrapper.find('form').simulate('submit', { preventDefault: () => {} })
+    const loginData = { email: 'email@email.com', password: 'password' };
+    expect(loginAction).toHaveBeenCalledWith(loginData)
   });
 });

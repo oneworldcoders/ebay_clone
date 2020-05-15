@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signupAction } from "../../actions/signupAction";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import "./SignupForm.css";
 
 
@@ -12,9 +12,9 @@ function SignupForm() {
   const [password, setPassword] = useState();
 
   const signupError = useSelector(state => state.signupReducer.signuperror)
+  const redirect = useSelector(state => state.signupReducer.home)
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const onFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -38,9 +38,13 @@ function SignupForm() {
       email,
       password,
     };
-    dispatch(signupAction(signup_data, history))
+    dispatch(signupAction(signup_data))
 
   };
+
+  if (redirect) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <>
@@ -60,6 +64,7 @@ function SignupForm() {
               <div className="form-group row">
                 <div className="col-sm-9">
                   <input
+                    id='firstname'
                     type="text"
                     required
                     className="form-control form-control-lg"
@@ -72,6 +77,7 @@ function SignupForm() {
               <div className="form-group row">
                 <div className="col-sm-9">
                   <input
+                    id='lastname'
                     type="text"
                     required
                     className="form-control form-control-lg"
@@ -84,6 +90,7 @@ function SignupForm() {
               <div className="form-group row">
                 <div className="col-sm-9">
                   <input
+                    id='email'
                     type="text"
                     required
                     className="form-control form-control-lg"
@@ -96,6 +103,7 @@ function SignupForm() {
               <div className="form-group row">
                 <div className="col-sm-9">
                   <input
+                    id='password'
                     type="password"
                     className="form-control form-control-lg"
                     placeholder="Password"

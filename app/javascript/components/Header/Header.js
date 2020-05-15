@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Header.css";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -13,7 +13,6 @@ function Header() {
   const userdata = useSelector(state => state.loginReducer.userdata)
 
   const dispatch = useDispatch()
-  const history = useHistory()
 
   if(isLoggedIn){
     return(
@@ -25,7 +24,7 @@ function Header() {
         </div>
         <div className="auth">
           <span id='username' className='clickable'>{ userdata.firstname }</span>
-          <span className="navlink clickable" onClick={()=>{dispatch(resetStateAction(history))}}>
+          <span id='signout' className="navlink clickable" onClick={()=>{dispatch(resetStateAction())}}>
             Signout 
           </span>
           {/* <Link to="/about" className="navlink">
