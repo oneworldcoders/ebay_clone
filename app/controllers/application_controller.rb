@@ -3,9 +3,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_action :authenticate_user
   
-  def token_blacklisted?(token)
-    JwtBlacklist.exists?(jti: token)
-  end
 
   private
   def authenticate_user
@@ -22,6 +19,10 @@ class ApplicationController < ActionController::Base
     else
      head :unauthorized
     end
+  end
+
+  def token_blacklisted?(token)
+    JwtBlacklist.exists?(jti: token)
   end
 
 end

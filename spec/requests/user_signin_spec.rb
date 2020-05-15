@@ -1,23 +1,16 @@
 require 'rails_helper'
+require './spec/support/authentication_helper'
+
+include AuthenticationHelper
 
 RSpec.describe 'user' do
-
-  describe 'signin', :type => :request do
-
-    DatabaseCleaner.strategy = :truncation
-    after(:each) do
-      DatabaseCleaner.clean
-    end
-
-    USER = {
-      email: 'emma@gmail.com',
-      password: 'password'
-    }
+  context 'signin', :type => :request do
+    let(:user) { {email: 'emma@gmail.com', password: 'password'} }
 
     context 'succesful' do
       before do
-        User.create(USER)
-        post user_session_path, params: USER
+        signup(user)
+        post user_session_path, params: user
       end
 
       it 'returns an OK response status' do
@@ -33,7 +26,7 @@ RSpec.describe 'user' do
 
     context 'unsuccessful' do
       before do
-        post user_session_path, params: USER
+        post user_session_path, params: user
       end
 
       it 'returnsa bad request status code' do
