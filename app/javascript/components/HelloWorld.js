@@ -3,11 +3,19 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 
 
+import Datastore from '../datastore';
+
 const GET_THINGS_REQUEST = 'GET_THINGS_REQUEST';
 const GET_THINGS_SUCCESS = 'GET_THINGS_SUCCESS';
 
 function getThings() {
   console.log('Get things Action');
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${Datastore().get('token')}`
+  }
+  console.log(headers);
+  
   return dispatch => {
     dispatch({ type: GET_THINGS_REQUEST })
     return fetch('v1/things.json')

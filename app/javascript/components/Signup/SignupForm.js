@@ -43,7 +43,7 @@ function SignupForm() {
   };
 
   if (redirect) {
-    return <Redirect to='/' />;
+    return <Redirect to='/login' />;
   }
 
   return (
