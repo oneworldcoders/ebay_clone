@@ -9,7 +9,7 @@ export default function(state = {}, action) {
         login: 'login succesful',
         userdata: action.json.user,
         token: action.json.token,
-        home: true,
+        homeredirect: true,
         loggedin: true
       }
     case LOGIN_FAILURE:
@@ -19,7 +19,8 @@ export default function(state = {}, action) {
       }
     case LOGOUT_SUCCESS:
       return {
-        state: INITIAL_STATE
+        state: INITIAL_STATE,
+        loginredirect: true
       }
     default:
       return state;

@@ -1,16 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import Cookies from 'universal-cookie';
+import Datastore from '../datastore';
 
-const cookies = new Cookies();
 const GET_THINGS_REQUEST = 'GET_THINGS_REQUEST';
 const GET_THINGS_SUCCESS = 'GET_THINGS_SUCCESS';
 
 function getThings() {
   const headers = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${cookies.get('token')}`
+    'Authorization': `Bearer ${Datastore().get('token')}`
   }
   console.log(headers);
   
