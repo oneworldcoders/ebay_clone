@@ -2,10 +2,10 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import loginReducer from './reducers/loginReducer'
 import signupReducer from './reducers/signupReducer'
 import thunk from 'redux-thunk'
-import Cookies from 'universal-cookie';
 import { composeWithDevTools } from 'redux-devtools-extension'
+import Datastore from './datastore';
 
-const cookies = new Cookies();
+const datastore = Datastore()
 
 export const INITIAL_STATE = {
   thingsReducer: {
@@ -16,9 +16,9 @@ export const INITIAL_STATE = {
   },
   loginReducer: {
     login: null,
-    loggedin: cookies.get('isLoggedIn'),
-    userdata: cookies.get('userdata'),
-    token: cookies.get('token')
+    loggedin: datastore.get('isLoggedIn'),
+    userdata: datastore.get('userdata'),
+    token: datastore.get('token')
   },
   signupReducer: {
     signup: null,

@@ -1,9 +1,10 @@
 import { LOGOUT_SUCCESS, LOGOUT_FAILURE } from './types';
-import Cookies from 'universal-cookie';
+import Datastore from '../datastore';
 
-const cookies = new Cookies();
 
-export function resetStateAction(history) {
+const datastore = Datastore()
+
+export function resetStateAction() {
   return (dispatch) => {
     
     const fetchData = {
@@ -11,32 +12,24 @@ export function resetStateAction(history) {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${cookies.get('token')}`
+        'Authorization': `Bearer ${datastore.get('token')}`
       }
     }
    
     return fetch('/v1/logout', fetchData)
       .then(response => response.json())
       .then(json => {
-        console.log(json);
-        if (!json.errors) {
-          clearCookies()
-          dispatch(logoutSuccess())
-          history.push('/login')
-        } else {
+        if (json.errors) {
           dispatch(logoutFailure(json.errors))
+        } else {
+          datastore.clearAll()
+          dispatch(logoutSuccess())
         }
       })
       .catch(error => {
         console.log(error)
       })
   }
-}
-
-export function clearCookies() {
-  Object.keys(cookies.getAll()).forEach((cookie) => {
-    cookies.remove(cookie)
-  })
 }
 
 export function logoutSuccess(){

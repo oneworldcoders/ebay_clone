@@ -40,8 +40,7 @@ describe('signupAction', () => {
     ]
 
     const store = mockStore()
-    const historyMock = { push: jest.fn() }
-    store.dispatch(signupAction(signupData, historyMock)).then(() => {
+    store.dispatch(signupAction(signupData)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
@@ -60,8 +59,7 @@ describe('signupAction', () => {
     ]
 
     const store = mockStore()
-    const historyMock = { push: jest.fn() }
-    store.dispatch(signupAction(signupData, historyMock)).then(() => {
+    store.dispatch(signupAction(signupData)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
