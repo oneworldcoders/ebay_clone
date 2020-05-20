@@ -1,15 +1,16 @@
 import { enableFetchMocks } from 'jest-fetch-mock'
 enableFetchMocks()
 
-import { loginAction, loginSuccess, loginFailure } from "../../actions/loginAction";
 import thunk from 'redux-thunk'
 import configureMockStore from 'redux-mock-store'
 import { LOGIN_SUCCESS, LOGIN_FAILURE } from '../../actions/types';
 import Datastore from '../../datastore';
+import { loginAction, loginSuccess, loginFailure } from "../../actions/loginAction";
+import { MockTokenStore, MockUserDataStore} from '../../__mocks__/mockDataStore';
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
-
+const datastore = new Datastore(new MockTokenStore(), new MockUserDataStore())
 
 describe('loginAction', () => {
 
@@ -61,7 +62,7 @@ describe('loginAction', () => {
     ]
 
     const store = mockStore()
-    store.dispatch(loginAction(loginData)).then(() => {
+    store.dispatch(loginAction(loginData, datastore)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
@@ -75,8 +76,8 @@ describe('loginAction', () => {
 
     fetch.mockResponseOnce(JSON.stringify(loginResponse))
     const store = mockStore()
-    store.dispatch(loginAction(loginData)).then(() => {
-      expect(Datastore().get('token')).toEqual('1234')
+    store.dispatch(loginAction(loginData, datastore)).then(() => {
+      expect(datastore.get('token')).toEqual('1234')
     })
   })
 });

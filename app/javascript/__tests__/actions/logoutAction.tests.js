@@ -6,9 +6,10 @@ import thunk from 'redux-thunk'
 import { logoutSuccess, logoutFailure, resetStateAction } from '../../actions/logoutAction'
 import { LOGOUT_SUCCESS, LOGOUT_FAILURE } from '../../actions/types'
 import Datastore from '../../datastore'
+import { MockTokenStore, MockUserDataStore} from '../../__mocks__/mockDataStore'
 
 
-let datastore = Datastore()
+const datastore = new Datastore(new MockTokenStore(), new MockUserDataStore())
 
 describe('logoutAction', () => {
   const middlewares = [thunk]
@@ -41,8 +42,10 @@ describe('logoutAction', () => {
     fetch.mockResponseOnce(JSON.stringify(response))
 
     const store = mockStore()
-    store.dispatch(resetStateAction()).then(() => {
+    store.dispatch(resetStateAction(datastore)).then(() => {
       token = datastore.get('token')
+      console.log('token should be undefinded', token);
+      
       expect(token).toBeUndefined()
     })
   })
@@ -54,7 +57,7 @@ describe('logoutAction', () => {
     const expectedActions = [ { type: LOGOUT_SUCCESS } ]
 
     const store = mockStore()
-    store.dispatch(resetStateAction()).then(() => {
+    store.dispatch(resetStateAction(datastore)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
@@ -69,7 +72,7 @@ describe('logoutAction', () => {
     const expectedActions = [ { type: LOGOUT_FAILURE,  error: error.errors } ]
 
     const store = mockStore()
-    store.dispatch(resetStateAction()).then(() => {
+    store.dispatch(resetStateAction(datastore)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 

@@ -1,35 +1,25 @@
-import { LOGOUT_SUCCESS, LOGOUT_FAILURE } from './types';
+import { LOGOUT_SUCCESS, LOGOUT_FAILURE, RESET_REDIRECT } from './types';
 import Datastore from '../datastore';
+import RequestApi from '../requestApi';
 
 
-const datastore = Datastore()
+const request = new RequestApi('/v1/logout', 'DELETE')
 
-export function resetStateAction() {
-  return (dispatch) => {
-    
-    const fetchData = {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${datastore.get('token')}`
-      }
+export function resetStateAction(datastore = new Datastore()) {
+  return async (dispatch) => {
+    const json = await request.authenticatedRequest(datastore.get('token'))
+    if (json.errors) {
+      dispatch(logoutFailure(json.errors))
+    } else {
+      datastore.clearAll()
+      dispatch(logoutSuccess())
     }
-   
-    return fetch('/v1/logout', fetchData)
-      .then(response => response.json())
-      .then(json => {
-        if (json.errors) {
-          dispatch(logoutFailure(json.errors))
-        } else {
-          datastore.clearAll()
-          dispatch(logoutSuccess())
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
   }
+}
+
+export function resetLoginRedirect() {
+  return { type: RESET_REDIRECT}
+
 }
 
 export function logoutSuccess(){

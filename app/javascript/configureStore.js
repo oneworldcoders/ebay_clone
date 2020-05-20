@@ -5,7 +5,7 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import Datastore from './datastore';
 
-const datastore = Datastore()
+const datastore = new Datastore()
 
 export const INITIAL_STATE = {
   thingsReducer: {
