@@ -6,7 +6,7 @@ import RequestApi from '../requestApi';
 
 
 const datastore = new Datastore()
-const request = new RequestApi('v1/things', 'GET')
+const request = new RequestApi('/products', 'GET')
 
 const GET_THINGS_SUCCESS = 'GET_THINGS_SUCCESS';
 

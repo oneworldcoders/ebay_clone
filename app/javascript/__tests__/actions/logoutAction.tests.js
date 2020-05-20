@@ -62,7 +62,7 @@ describe('logoutAction', () => {
     })
 
     expect(fetch.mock.calls.length).toEqual(1)
-    expect(fetch.mock.calls[0][0]).toEqual('/v1/logout')
+    expect(fetch.mock.calls[0][0]).toEqual('/signout')
   })
 
   it('dispatches a logout failure', async () => {
@@ -77,7 +77,7 @@ describe('logoutAction', () => {
     })
 
     expect(fetch.mock.calls.length).toEqual(1)
-    expect(fetch.mock.calls[0][0]).toEqual('/v1/logout')
+    expect(fetch.mock.calls[0][0]).toEqual('/signout')
   })
 
 });

@@ -3,7 +3,7 @@ import Datastore from '../datastore';
 import RequestApi from '../requestApi';
 
 
-const request = new RequestApi('/v1/logout', 'DELETE')
+const request = new RequestApi('/signout', 'DELETE')
 
 export function resetStateAction(datastore = new Datastore()) {
   return async (dispatch) => {
