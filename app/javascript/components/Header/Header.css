@@ -1,0 +1,31 @@
+.header{
+  display: flex;
+  background-color: black;
+  height: 5rem;
+  justify-content: space-around;
+}
+.navlink{
+  margin: 1.2rem;
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none !important;
+}
+.ebay{
+  margin: 20px;
+  color: white;
+  font-size: 25px;
+  text-decoration: none !important;
+}
+.auth{
+  margin: 20px;
+  color: white;
+  font-size: 25px;
+  text-decoration: none !important;
+}
+.clickable{
+  cursor: pointer;
+}
+
+.clickable:hover {
+  color: #055FAA;
+}

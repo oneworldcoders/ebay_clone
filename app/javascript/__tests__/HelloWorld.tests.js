@@ -10,7 +10,7 @@ describe('HelloWorld', () => {
   beforeEach(() => {
     const middlewares = []
     const mockStore = configureMockStore(middlewares)
-    const initialState = { things: []}
+    const initialState = { thingsReducer: { things: [] } }
     const store = mockStore(initialState)
     wrapper = mount(<Provider store={store}><HelloWorld /></Provider>)
   });
