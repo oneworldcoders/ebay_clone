@@ -1,9 +1,6 @@
 import { LOGIN_SUCCESS, LOGIN_FAILURE } from "./types";
-import Datastore from "../datastore";
+import Cookies from 'universal-cookie';
 
-// Try to stub out the datastore for testing
-// extract fetch and the headers
-const datastore = Datastore()
 
 export function loginAction(login_data) {
   return (dispatch) => {
@@ -18,13 +15,12 @@ export function loginAction(login_data) {
     return fetch('/login', fetchData)
       .then(response => response.json())
       .then(json => {
-        if (json.errors) {
-          dispatch(loginFailure(json.errors))
-        } else {
-          datastore.set('userdata', json.user)
-          datastore.set('token', json.token)
-          datastore.set('isLoggedIn', true)
+        console.log(json);
+        if (!json.errors) {
+          setCookies(json.user, json.token) 
           dispatch(loginSuccess(json))
+        } else {
+          dispatch(loginFailure(json.errors))
         }
       })
       .catch(error => {
@@ -46,3 +42,11 @@ export function loginFailure(error) {
     error
   }
 };
+
+const setCookies = (userData, token) => {
+  const cookies = new Cookies()
+  cookies.set('token', token, { path: '/'})
+  cookies.set('userdata', userData, { path: '/'})
+  cookies.set('isLoggedIn', true, { path: '/'})
+  return true;
+}

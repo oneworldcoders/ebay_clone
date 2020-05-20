@@ -10,7 +10,7 @@ function LoginForm() {
   const [password, setPassword] = useState();
 
   const loginStatus = useSelector(state => state.loginReducer.login)
-  const redirect = useSelector(state => state.loginReducer.homeredirect)
+  const redirect = useSelector(state => state.loginReducer.home)
 
   const dispatch = useDispatch();
 

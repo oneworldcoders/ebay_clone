@@ -32,7 +32,7 @@ describe('Header', () => {
       store = mockStore(initialState)
       wrapper = mount(<Provider store={store}>< BrowserRouter><Header /></ BrowserRouter></Provider>)
     })
-    it('renders username when signed in', () => {
+    it('renders usernmae when signed in', () => {
       const username = wrapper.find('#username')
       expect(username.text()).toEqual('emma')
     });

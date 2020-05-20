@@ -3,12 +3,10 @@ enableFetchMocks()
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { logoutSuccess, logoutFailure, resetStateAction } from '../../actions/logoutAction'
+import { logoutSuccess, logoutFailure, clearCookies, resetStateAction } from '../../actions/logoutAction'
 import { LOGOUT_SUCCESS, LOGOUT_FAILURE } from '../../actions/types'
-import Datastore from '../../datastore'
+import Cookies from 'universal-cookie';
 
-
-let datastore = Datastore()
 
 describe('logoutAction', () => {
   const middlewares = [thunk]
@@ -31,20 +29,15 @@ describe('logoutAction', () => {
     expect(actual).toEqual(expected)
   });
   
-  it('logout deletes token from datastore', () => {
-    let token = '1234';
-    datastore.set('token', token);
-    token = datastore.get('token')
-    expect(token).toEqual(token)
-
-    const response = { message: 'logout successful' }
-    fetch.mockResponseOnce(JSON.stringify(response))
-
-    const store = mockStore()
-    store.dispatch(resetStateAction()).then(() => {
-      token = datastore.get('token')
-      expect(token).toBeUndefined()
-    })
+  it('clearCookies deletes all cookies', () => {
+    const cookies = new Cookies();
+    cookies.set('name', 'Emma');
+    cookies.set('tokem', '1234');
+    clearCookies();
+    const name = cookies.get('name')
+    const token = cookies.get('token')
+    expect(name).toBeUndefined()
+    expect(token).toBeUndefined()
   })
 
   it('dispatches a logout success', async () => {
@@ -54,7 +47,8 @@ describe('logoutAction', () => {
     const expectedActions = [ { type: LOGOUT_SUCCESS } ]
 
     const store = mockStore()
-    store.dispatch(resetStateAction()).then(() => {
+    const historyMock = { push: jest.fn() }
+    store.dispatch(resetStateAction(historyMock)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
@@ -69,7 +63,8 @@ describe('logoutAction', () => {
     const expectedActions = [ { type: LOGOUT_FAILURE,  error: error.errors } ]
 
     const store = mockStore()
-    store.dispatch(resetStateAction()).then(() => {
+    const historyMock = { push: jest.fn() }
+    store.dispatch(resetStateAction(historyMock)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 

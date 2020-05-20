@@ -37,14 +37,11 @@ describe("logout", () => {
 
   it("resets to the initial state", () => {
     const newState = loginReducer({}, action);
-    expect(newState.state).toEqual(INITIAL_STATE);
+    expect(newState).toEqual({state: INITIAL_STATE});
   });
 
-  it("sets the home redirect to true", () => {
-    const newState = loginReducer({}, action);
-    expect(newState.loginredirect).toEqual(true);
-  });
 });
+
 
 describe("login reducer failure", () => {
   let action;

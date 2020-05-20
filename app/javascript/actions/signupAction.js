@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { SIGNUP_SUCCESS, SIGNUP_FAILURE } from "./types";
 
-export function signupAction(signup_data) {
+export function signupAction(signup_data, history) {
   
   return async (dispatch) => {
     const fetchData = {
@@ -15,11 +15,13 @@ export function signupAction(signup_data) {
     return await fetch('/signup', fetchData)
       .then(response => response.json())
       .then(json => {
-        if (json.errors) {
-          dispatch(signupFailure(json.errors))
-        } else {
+        console.log(json);
+        if (!json.errors) {
           dispatch(signupSuccess(json))
           toast.success('Signp succesful')
+          history.push('/')
+        } else {
+          dispatch(signupFailure(json.errors))
         }
       })
       .catch(error => {

@@ -1,16 +1,16 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "./Header.css";
 import { useSelector, useDispatch } from "react-redux";
 
 import { resetStateAction } from "../../actions/logoutAction";
-import "./Header.css";
+
 
 
 function Header() {
 
   const isLoggedIn = useSelector(state => state.loginReducer.loggedin)
   const userdata = useSelector(state => state.loginReducer.userdata)
-  const redirect = useSelector(state => state.loginReducer.loginredirect)
 
   const dispatch = useDispatch()
 
@@ -36,27 +36,24 @@ function Header() {
   }
 
   return (
-    <>
-      <div className="header container">
-        <div className="ebay">
-          <Link to="/" className="navlink">
-            EBay
-          </Link>
-        </div>
-        <div className="auth">
-          <Link to="/login" className="navlink">
-          <span id='username'>Login</span>
-          </Link>
-          <Link to="/signup" className="navlink">
-            Signup
-          </Link>
-          {/* <Link to="/about" className="navlink">
-            About
-          </Link> */}
-        </div>
+    <div className="header container">
+      <div className="ebay">
+        <Link to="/" className="navlink">
+          EBay
+        </Link>
       </div>
-      { redirect && <Redirect to='/login' /> }
-    </>
+      <div className="auth">
+        <Link to="/login" className="navlink">
+        <span id='username'>Login</span>
+        </Link>
+        <Link to="/signup" className="navlink">
+          Signup
+        </Link>
+        {/* <Link to="/about" className="navlink">
+          About
+        </Link> */}
+      </div>
+    </div>
   );
 }
 export default Header;

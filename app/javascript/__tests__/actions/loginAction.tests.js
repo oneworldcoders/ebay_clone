@@ -5,7 +5,6 @@ import { loginAction, loginSuccess, loginFailure } from "../../actions/loginActi
 import thunk from 'redux-thunk'
 import configureMockStore from 'redux-mock-store'
 import { LOGIN_SUCCESS, LOGIN_FAILURE } from '../../actions/types';
-import Datastore from '../../datastore';
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
@@ -33,16 +32,16 @@ describe('loginAction', () => {
 
   it('dispatches a login success', async () => {
     const loginData = { email: 'email', password: 'password' }
-    const loginResponse = { email: 'email' }
 
-    fetch.mockResponseOnce(JSON.stringify(loginResponse))
+    fetch.mockResponseOnce(JSON.stringify(loginData))
 
     const expectedActions = [
-      { type: LOGIN_SUCCESS, json: loginResponse}
+      { type: LOGIN_SUCCESS, json: loginData}
     ]
 
     const store = mockStore()
-    store.dispatch(loginAction(loginData)).then(() => {
+    const historyMock = { push: jest.fn() }
+    store.dispatch(loginAction(loginData, historyMock)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
@@ -61,22 +60,12 @@ describe('loginAction', () => {
     ]
 
     const store = mockStore()
-    store.dispatch(loginAction(loginData)).then(() => {
+    const historyMock = { push: jest.fn() }
+    store.dispatch(loginAction(loginData, historyMock)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
     expect(fetch.mock.calls.length).toEqual(1)
     expect(fetch.mock.calls[0][0]).toEqual('/login')
-  })
-
-  it('sets the token in the datastore', () => {
-    const loginData = { email: 'email', password: 'password' }
-    const loginResponse = { email: 'email', token: '1234' }
-
-    fetch.mockResponseOnce(JSON.stringify(loginResponse))
-    const store = mockStore()
-    store.dispatch(loginAction(loginData)).then(() => {
-      expect(Datastore().get('token')).toEqual('1234')
-    })
   })
 });
