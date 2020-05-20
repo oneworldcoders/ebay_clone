@@ -4,7 +4,7 @@ enableFetchMocks()
 import thunk from 'redux-thunk'
 import configureMockStore from 'redux-mock-store'
 import { signupSuccess, signupFailure, signupAction } from '../../actions/signupAction'
-import { SIGNUP_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST } from '../../actions/types'
+import { SIGNUP_SUCCESS, SIGNUP_FAILURE } from '../../actions/types'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
