@@ -1,8 +1,8 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { resetStateAction } from "../../actions/logoutAction";
+import { resetStateAction, resetLoginRedirect } from "../../actions/logoutAction";
 import "./Header.css";
 
 
@@ -11,8 +11,14 @@ function Header() {
   const isLoggedIn = useSelector(state => state.loginReducer.loggedin)
   const userdata = useSelector(state => state.loginReducer.userdata)
   const redirect = useSelector(state => state.loginReducer.loginredirect)
+  const location = useLocation()
 
   const dispatch = useDispatch()
+
+  
+  if(redirect && location.pathname != '/login' ) {
+    return <Redirect to='/login' />
+  }
 
   if(isLoggedIn){
     return(
@@ -55,7 +61,7 @@ function Header() {
           </Link> */}
         </div>
       </div>
-      { redirect && <Redirect to='/login' /> }
+      {/* { redirect && <Redirect to='/login' /> } */}
     </>
   );
 }

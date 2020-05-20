@@ -1,36 +1,30 @@
 import Cookies from 'universal-cookie';
 
-function Datastore() {
-  const cookies = new Cookies()
+export default class Datastore {
+
+  constructor(tokenStore=new Cookies(), userDataStore=localStorage) {
+    this.tokenStore = tokenStore
+    this.userDataStore = userDataStore
+  }
   
-  function set(key, value) {
+  set(key, value) {
     if (key == 'token') {
-      cookies.set(key, value, { path: '/'})
+      this.tokenStore.set(key, value, { path: '/'})
     } else {
-      localStorage.setItem(key, value)
+      this.userDataStore.setItem(key, value)
     }
   }
 
-  function get(key) {
+  get(key) {
     if (key == 'token') {
-      return cookies.get(key)
+      return this.tokenStore.get(key)
     } else {
-      return localStorage.getItem(key)
+      return this.userDataStore.getItem(key)
     }
   }
 
-  function clearAll() {
-    Object.keys(cookies.getAll()).forEach((cookie) => {
-      cookies.remove(cookie)
-    })
-    localStorage.clear()
-  }
-
-  return {
-    set,
-    get,
-    clearAll
+  clearAll() {
+    this.tokenStore.remove('token')
+    this.userDataStore.clear()
   }
 }
-
-export default Datastore;

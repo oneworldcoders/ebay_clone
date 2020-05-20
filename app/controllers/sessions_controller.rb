@@ -6,7 +6,9 @@ class SessionsController < Devise::SessionsController
     user = User.find_by_email(params[:email])
 
     if user && user.valid_password?(params[:password])
-      token = JWT.encode(JSON.parse(user.to_json), Rails.application.secrets.secret_key_base)
+      json_user = JSON.parse(user.to_json)
+      json_user[:exp] = 24.hours.from_now.to_i
+      token = JWT.encode(json_user, Rails.application.secrets.secret_key_base)
       render json: { user: user, token: token }, status: 200
     end
   end
