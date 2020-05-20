@@ -15,8 +15,12 @@ function Header() {
 
   const dispatch = useDispatch()
 
+  // if (redirect && location.pathname == '/login') {
+  //   dispatch(resetLoginRedirect())
+  // }
   
   if(redirect && location.pathname != '/login' ) {
+    // dispatch(resetLoginRedirect())
     return <Redirect to='/login' />
   }
 
