@@ -2,7 +2,6 @@ import { LOGIN_SUCCESS, LOGIN_FAILURE } from "./types";
 import Datastore from "../datastore";
 import RequestApi from '../requestApi';
 
-
 const request = new RequestApi('/login', 'POST');
 
 export function loginAction(login_data, datastore = new Datastore()) {
