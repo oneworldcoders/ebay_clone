@@ -33,8 +33,7 @@ describe('loginAction', () => {
   });
 
   it('dispatches a login success', async () => {
-    const loginData = { email: 'email', password: 'password' }
-    const loginResponse = { email: 'email' }
+    const loginResponse = { user: { firstname: 'firstname' } }
 
     fetch.mockResponseOnce(JSON.stringify(loginResponse))
 
@@ -43,7 +42,7 @@ describe('loginAction', () => {
     ]
 
     const store = mockStore()
-    store.dispatch(loginAction(loginData)).then(() => {
+    store.dispatch(loginAction({})).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
@@ -52,7 +51,6 @@ describe('loginAction', () => {
   })
 
   it('dispatches a login failure', async () => {
-    const loginData = { email: 'email', password: 'password' }
     const error = { errors: 'invalid credentials' }
 
     fetch.mockResponseOnce(JSON.stringify(error))
@@ -62,7 +60,7 @@ describe('loginAction', () => {
     ]
 
     const store = mockStore()
-    store.dispatch(loginAction(loginData, datastore)).then(() => {
+    store.dispatch(loginAction({}, datastore)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
@@ -71,12 +69,11 @@ describe('loginAction', () => {
   })
 
   it('sets the token in the datastore', () => {
-    const loginData = { email: 'email', password: 'password' }
-    const loginResponse = { email: 'email', token: '1234' }
+    const loginResponse = { user: { firstname: 'firstname' }, token: '1234' }
 
     fetch.mockResponseOnce(JSON.stringify(loginResponse))
     const store = mockStore()
-    store.dispatch(loginAction(loginData, datastore)).then(() => {
+    store.dispatch(loginAction({}, datastore)).then(() => {
       expect(datastore.get('token')).toEqual('1234')
     })
   })

@@ -11,7 +11,7 @@ export function loginAction(login_data, datastore = new Datastore()) {
     if (json.errors) {
       dispatch(loginFailure(json.errors))
     } else {
-      datastore.set('userdata', json.user)
+      datastore.set('firstname', json.user.firstname)
       datastore.set('token', json.token)
       datastore.set('isLoggedIn', true)
       dispatch(loginSuccess(json))

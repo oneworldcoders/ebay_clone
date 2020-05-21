@@ -7,7 +7,7 @@ export default function(state = {}, action) {
       return { 
         ...state,
         login: 'login succesful',
-        userdata: action.json.user,
+        firstname: action.json.user.firstname,
         token: action.json.token,
         homeredirect: true,
         loggedin: true,

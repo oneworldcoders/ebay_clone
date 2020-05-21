@@ -44,8 +44,6 @@ describe('logoutAction', () => {
     const store = mockStore()
     store.dispatch(resetStateAction(datastore)).then(() => {
       token = datastore.get('token')
-      console.log('token should be undefinded', token);
-      
       expect(token).toBeUndefined()
     })
   })

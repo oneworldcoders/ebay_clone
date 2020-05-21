@@ -1,12 +1,14 @@
 import React from "react";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import ebayBanner from "../../assets/images/ebay-banner-mini.png";
 import "./LandingPage.css";
-import HelloWorld from "../../components/HelloWorld";
-// import ebayCart from "../../assets/images/ebay-cart.png";
+import Item from "../../components/Item/Item";
+import { getProducts } from "../../actions/productAction";
 
 function LandingPage() {
-  const signupStatus = useSelector(state => state.signupReducer.signup)
+
+  const dispatch = useDispatch()
+  const products = useSelector(state => state.productReducer.products)
 
   return (
     <div className="container">
@@ -17,19 +19,21 @@ function LandingPage() {
         <h2>Shop With Us</h2>
       </div>
       <div>
-        {/* <img
-          className="large-banner"
-          src={ebayCart}
-          alt="large banner"
-        /> */}
-      
         <div className="col-md-12 form">
           <div className="col-sm-9">
-            This is the landing Page
             <div>
-            <HelloWorld />
+            <button onClick={() => dispatch(getProducts())}>Products</button>
             </div>
           </div>
+          { products &&
+            <div className="item-container">
+              {
+                products.map((val, index) => {
+                  return <Item key={index} {...val}/>;
+                })
+              }
+            </div>
+          }
         </div>
       </div>
     </div>
