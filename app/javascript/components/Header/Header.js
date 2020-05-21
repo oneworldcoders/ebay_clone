@@ -10,7 +10,6 @@ import "./Header.css";
 function Header() {
 
   const isLoggedIn = useSelector(state => state.loginReducer.loggedin)
-  // const userdata = useSelector(state => state.loginReducer.userdata)
   const firstname = useSelector(state => state.loginReducer.firstname)
   const redirect = useSelector(state => state.loginReducer.loginredirect)
   const location = useLocation()

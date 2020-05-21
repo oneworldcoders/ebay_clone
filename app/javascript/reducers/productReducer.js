@@ -1,4 +1,4 @@
-import { GET_PRODUCTS_SUCCESS } from '../actions/types'
+import { GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE } from '../actions/types'
 
 export default function(state = {}, action) {
   switch (action.type) {
@@ -7,6 +7,11 @@ export default function(state = {}, action) {
         ...state,
         products: action.json.products,
       }
+      case GET_PRODUCTS_FAILURE:
+        return {
+          ...state,
+          products: [],
+        }
     default:
       return state;
   }

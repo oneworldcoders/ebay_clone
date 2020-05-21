@@ -19,9 +19,9 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" render={() => <Main child={<LandingPage />} />} />
-            <Route exact path="/signup" render={() => <Main child={<SignupPage />} /> } />
-            <Route exact path="/login" render={(props) => <Main browserProps={props} child={<LoginPage />} /> } /> 
+            <Route exact path="/" render={() =>  <Main> <LandingPage /> </Main> } />
+            <Route exact path="/signup" render={() =>  <Main> <SignupPage /> </Main> } />
+            <Route exact path="/login" render={() => <Main> <LoginPage /> </Main> } />
           </Switch>
         </BrowserRouter>
         <ToastContainer />

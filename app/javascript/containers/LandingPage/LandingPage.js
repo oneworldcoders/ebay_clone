@@ -10,6 +10,9 @@ function LandingPage() {
   const dispatch = useDispatch()
   const products = useSelector(state => state.productReducer.products)
 
+  console.log('products', products);
+  
+
   return (
     <div className="container">
       <div>
@@ -25,7 +28,6 @@ function LandingPage() {
             <button onClick={() => dispatch(getProducts())}>Products</button>
             </div>
           </div>
-          { products &&
             <div className="item-container">
               {
                 products.map((val, index) => {
@@ -33,7 +35,6 @@ function LandingPage() {
                 })
               }
             </div>
-          }
         </div>
       </div>
     </div>
