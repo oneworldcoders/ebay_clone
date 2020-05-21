@@ -4,7 +4,7 @@ enableFetchMocks()
 import thunk from 'redux-thunk'
 import configureMockStore from 'redux-mock-store'
 import { signupSuccess, signupFailure, signupAction } from '../../actions/signupAction'
-import { SIGNUP_SUCCESS, SIGNUP_FAILURE, SIGNUP_REQUEST } from '../../actions/types'
+import { SIGNUP_SUCCESS, SIGNUP_FAILURE } from '../../actions/types'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
@@ -40,8 +40,7 @@ describe('signupAction', () => {
     ]
 
     const store = mockStore()
-    const historyMock = { push: jest.fn() }
-    store.dispatch(signupAction(signupData, historyMock)).then(() => {
+    store.dispatch(signupAction(signupData)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
@@ -60,8 +59,7 @@ describe('signupAction', () => {
     ]
 
     const store = mockStore()
-    const historyMock = { push: jest.fn() }
-    store.dispatch(signupAction(signupData, historyMock)).then(() => {
+    store.dispatch(signupAction(signupData)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 

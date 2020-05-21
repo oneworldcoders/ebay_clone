@@ -1,31 +1,21 @@
 import { LOGIN_SUCCESS, LOGIN_FAILURE } from "./types";
-import Cookies from 'universal-cookie';
+import Datastore from "../datastore";
+import RequestApi from '../requestApi';
 
+const request = new RequestApi('/login', 'POST');
 
-export function loginAction(login_data) {
-  return (dispatch) => {
-    const fetchData = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(login_data)
+export function loginAction(login_data, datastore = new Datastore()) {
+  return async (dispatch) => {
+    const json = await request.unAuthenticatedRequest(login_data)
+    
+    if (json.errors) {
+      dispatch(loginFailure(json.errors))
+    } else {
+      datastore.set('userdata', json.user)
+      datastore.set('token', json.token)
+      datastore.set('isLoggedIn', true)
+      dispatch(loginSuccess(json))
     }
-    return fetch('/login', fetchData)
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        if (!json.errors) {
-          setCookies(json.user, json.token) 
-          dispatch(loginSuccess(json))
-        } else {
-          dispatch(loginFailure(json.errors))
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
   }
 };
 
@@ -42,11 +32,3 @@ export function loginFailure(error) {
     error
   }
 };
-
-const setCookies = (userData, token) => {
-  const cookies = new Cookies()
-  cookies.set('token', token, { path: '/'})
-  cookies.set('userdata', userData, { path: '/'})
-  cookies.set('isLoggedIn', true, { path: '/'})
-  return true;
-}

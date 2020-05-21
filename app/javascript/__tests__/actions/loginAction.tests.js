@@ -1,14 +1,16 @@
 import { enableFetchMocks } from 'jest-fetch-mock'
 enableFetchMocks()
 
-import { loginAction, loginSuccess, loginFailure } from "../../actions/loginAction";
 import thunk from 'redux-thunk'
 import configureMockStore from 'redux-mock-store'
 import { LOGIN_SUCCESS, LOGIN_FAILURE } from '../../actions/types';
+import Datastore from '../../datastore';
+import { loginAction, loginSuccess, loginFailure } from "../../actions/loginAction";
+import { MockTokenStore, MockUserDataStore} from '../../__mocks__/mockDataStore';
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
-
+const datastore = new Datastore(new MockTokenStore(), new MockUserDataStore())
 
 describe('loginAction', () => {
 
@@ -32,16 +34,16 @@ describe('loginAction', () => {
 
   it('dispatches a login success', async () => {
     const loginData = { email: 'email', password: 'password' }
+    const loginResponse = { email: 'email' }
 
-    fetch.mockResponseOnce(JSON.stringify(loginData))
+    fetch.mockResponseOnce(JSON.stringify(loginResponse))
 
     const expectedActions = [
-      { type: LOGIN_SUCCESS, json: loginData}
+      { type: LOGIN_SUCCESS, json: loginResponse}
     ]
 
     const store = mockStore()
-    const historyMock = { push: jest.fn() }
-    store.dispatch(loginAction(loginData, historyMock)).then(() => {
+    store.dispatch(loginAction(loginData)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
@@ -60,12 +62,22 @@ describe('loginAction', () => {
     ]
 
     const store = mockStore()
-    const historyMock = { push: jest.fn() }
-    store.dispatch(loginAction(loginData, historyMock)).then(() => {
+    store.dispatch(loginAction(loginData, datastore)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 
     expect(fetch.mock.calls.length).toEqual(1)
     expect(fetch.mock.calls[0][0]).toEqual('/login')
+  })
+
+  it('sets the token in the datastore', () => {
+    const loginData = { email: 'email', password: 'password' }
+    const loginResponse = { email: 'email', token: '1234' }
+
+    fetch.mockResponseOnce(JSON.stringify(loginResponse))
+    const store = mockStore()
+    store.dispatch(loginAction(loginData, datastore)).then(() => {
+      expect(datastore.get('token')).toEqual('1234')
+    })
   })
 });

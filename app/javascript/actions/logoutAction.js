@@ -1,42 +1,25 @@
-import { LOGOUT_SUCCESS, LOGOUT_FAILURE } from './types';
-import Cookies from 'universal-cookie';
+import { LOGOUT_SUCCESS, LOGOUT_FAILURE, RESET_REDIRECT } from './types';
+import Datastore from '../datastore';
+import RequestApi from '../requestApi';
 
-const cookies = new Cookies();
 
-export function resetStateAction(history) {
-  return (dispatch) => {
-    
-    const fetchData = {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${cookies.get('token')}`
-      }
+const request = new RequestApi('/signout', 'DELETE')
+
+export function resetStateAction(datastore = new Datastore()) {
+  return async (dispatch) => {
+    const json = await request.authenticatedRequest(datastore.get('token'))
+    if (json.errors) {
+      dispatch(logoutFailure(json.errors))
+    } else {
+      datastore.clearAll()
+      dispatch(logoutSuccess())
     }
-   
-    return fetch('/v1/logout', fetchData)
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        if (!json.errors) {
-          clearCookies()
-          dispatch(logoutSuccess())
-          history.push('/login')
-        } else {
-          dispatch(logoutFailure(json.errors))
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
   }
 }
 
-export function clearCookies() {
-  Object.keys(cookies.getAll()).forEach((cookie) => {
-    cookies.remove(cookie)
-  })
+export function resetLoginRedirect() {
+  return { type: RESET_REDIRECT}
+
 }
 
 export function logoutSuccess(){

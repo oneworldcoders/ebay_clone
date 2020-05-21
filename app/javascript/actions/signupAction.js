@@ -1,32 +1,18 @@
 import { toast } from 'react-toastify';
 import { SIGNUP_SUCCESS, SIGNUP_FAILURE } from "./types";
+import RequestApi from '../requestApi';
 
-export function signupAction(signup_data, history) {
-  
+const request = new RequestApi('/signup', 'POST')
+
+export function signupAction(signup_data) {
   return async (dispatch) => {
-    const fetchData = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(signup_data)
+    const json = await request.unAuthenticatedRequest(signup_data)
+    if (json.errors) {
+      dispatch(signupFailure(json.errors))
+    } else {
+      dispatch(signupSuccess(json))
+      toast.success('Signup succesful')
     }
-    return await fetch('/signup', fetchData)
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        if (!json.errors) {
-          dispatch(signupSuccess(json))
-          toast.success('Signp succesful')
-          history.push('/')
-        } else {
-          dispatch(signupFailure(json.errors))
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
   }
 };
 

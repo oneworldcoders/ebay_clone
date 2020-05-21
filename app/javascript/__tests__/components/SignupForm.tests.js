@@ -33,7 +33,7 @@ describe('SignupForm', () => {
     expect(signupAction).toHaveBeenCalledWith(signupdata)
   });
 
-  it('submits login data', () => {
+  it('submits signup data', () => {
     let firstname = wrapper.find('#firstname');
     let lastname = wrapper.find('#lastname');
     let email = wrapper.find('#email');

@@ -1,25 +1,23 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import Cookies from 'universal-cookie';
+import Datastore from '../datastore';
+import RequestApi from '../requestApi';
 
-const cookies = new Cookies();
-const GET_THINGS_REQUEST = 'GET_THINGS_REQUEST';
+
+const datastore = new Datastore()
+const request = new RequestApi('/products', 'GET')
+
 const GET_THINGS_SUCCESS = 'GET_THINGS_SUCCESS';
 
 function getThings() {
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${cookies.get('token')}`
-  }
-  console.log(headers);
-  
   return dispatch => {
-    dispatch({ type: GET_THINGS_REQUEST })
-    return fetch('v1/things.json', {headers})
-      .then(response => response.json())
-      .then(json => {dispatch(getThingsSuccess(json))})
-      .catch(error => console.log(error))
+    const json = request.authenticatedRequest(datastore.get('token'))
+    if (json.errors) {
+      // dispatch error
+    } else {
+      dispatch(getThingsSuccess(json))
+    }
   }
 };
 

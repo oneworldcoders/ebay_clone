@@ -1,5 +1,5 @@
 import { INITIAL_STATE } from "../configureStore";
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } from "../actions/types";
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, RESET_REDIRECT } from "../actions/types";
 
 export default function(state = {}, action) {
   switch (action.type) {    
@@ -9,8 +9,9 @@ export default function(state = {}, action) {
         login: 'login succesful',
         userdata: action.json.user,
         token: action.json.token,
-        home: true,
-        loggedin: true
+        homeredirect: true,
+        loggedin: true,
+        loginredirect: false
       }
     case LOGIN_FAILURE:
       return {
@@ -19,7 +20,15 @@ export default function(state = {}, action) {
       }
     case LOGOUT_SUCCESS:
       return {
-        state: INITIAL_STATE
+        state: INITIAL_STATE,
+        loginredirect: true
+      }
+    case RESET_REDIRECT:
+      console.log('RESET_REDIRECT');
+      
+      return {
+        ...state,
+        loginredirect: false
       }
     default:
       return state;
