@@ -2,7 +2,6 @@ import React from "react"
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
-import HelloWorld from "./HelloWorld"
 import configureStore from '../configureStore'
 import SignupPage from "../containers/SignupPage/SignupPage"
 import LandingPage from "../containers/LandingPage/LandingPage"
@@ -20,10 +19,9 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" render={() => <Main child={<LandingPage />} />} />
-            <Route exact path="/signup" render={() => <Main child={<SignupPage />} /> } />
-            <Route exact path="/login" render={(props) => <Main browserProps={props} child={<LoginPage />} /> } /> 
-            <Route exact path='/hello' render={() => <Main child={<HelloWorld greeting="Friend" />} /> } />
+            <Route exact path="/" render={() =>  <Main> <LandingPage /> </Main> } />
+            <Route exact path="/signup" render={() =>  <Main> <SignupPage /> </Main> } />
+            <Route exact path="/login" render={() => <Main> <LoginPage /> </Main> } />
           </Switch>
         </BrowserRouter>
         <ToastContainer />

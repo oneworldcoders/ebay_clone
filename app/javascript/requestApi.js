@@ -30,7 +30,7 @@ export default class RequestApi {
         return json
       })
       .catch((error) => {
-        return { logout: true }
+        return { unauthenticated: 'You need to be logged in' }
       })
   }
 }

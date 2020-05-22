@@ -7,7 +7,7 @@ describe("login reducer", () => {
   beforeEach(() => {
     action = {
       type: LOGIN_SUCCESS,
-      json: { user: 'user'}
+      json: { user: { firstname: 'user'} }
     };
   });
 
@@ -16,9 +16,9 @@ describe("login reducer", () => {
     expect(newState.login).toEqual('login succesful');
   });
 
-  it("userdata state sets to the user", () => {
+  it("firstname state sets to the user", () => {
     const newState = loginReducer({}, action);
-    expect(newState.userdata).toEqual('user');
+    expect(newState.firstname).toEqual('user');
   });
 
   it("loggedin state sets to true", () => {

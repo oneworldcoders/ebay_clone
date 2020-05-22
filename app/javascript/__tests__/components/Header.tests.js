@@ -7,6 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 jest.mock('../../actions/logoutAction')
 import { resetStateAction } from '../../actions/logoutAction';
+import LoggedOutHeader from '../../components/Header/LoggedOutHeader';
+import LoggedInHeader from '../../components/Header/LoggedInHeader';
 resetStateAction.mockReturnValue({type: ''})
 
 
@@ -26,12 +28,17 @@ describe('Header', () => {
   describe('signed in', () => {
     beforeEach(() => {
       initialState = { 
-        loginReducer: { loggedin: true, userdata: { firstname: 'emma'} },
-        signoutReducer: {loggedout:  false}
+        loginReducer: { loggedin: true, firstname: 'emma' },
        }
       store = mockStore(initialState)
       wrapper = mount(<Provider store={store}>< BrowserRouter><Header /></ BrowserRouter></Provider>)
     })
+
+    it('renders the logged in header', () => {
+      const loggedInHeader = wrapper.find(LoggedInHeader)
+      expect(loggedInHeader.length).toEqual(1)
+    })
+
     it('renders username when signed in', () => {
       const username = wrapper.find('#username')
       expect(username.text()).toEqual('emma')
@@ -44,16 +51,21 @@ describe('Header', () => {
     });
   })
 
-  
+  describe('logged out user', () => {
+    beforeEach(() => {
+      initialState = { loginReducer: { loggedin: false} }
+      store = mockStore(initialState)
+      wrapper = mount(<Provider store={store}>< BrowserRouter><Header /></ BrowserRouter></Provider>)
+    })
 
-  it('renders Login when not signed in', () => {
-    initialState = {
-      loginReducer: { loggedin: false},
-      signoutReducer: {loggedout:  false}
-    }
-    store = mockStore(initialState)
-    wrapper = mount(<Provider store={store}>< BrowserRouter><Header /></ BrowserRouter></Provider>)
-    const username = wrapper.find('#username')
-    expect(username.text()).toEqual('Login')
+    it('renders Login text', () => {
+      const username = wrapper.find('#username')
+      expect(username.text()).toEqual('Login')
+    });
+
+    it('renders the logged out header', () => {
+      const loggedInHeader = wrapper.find(LoggedOutHeader)
+      expect(loggedInHeader.length).toEqual(1)
+    })
   });
 });

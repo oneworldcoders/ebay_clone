@@ -1,13 +1,11 @@
 import React from 'react'
 import Header from "../components/Header/Header";
 
-export default function Main(props) {
-  console.log('layout gets rerendered: ' + props);
-  
+export default function Main({children}) {
   return (
     <>
       <Header />
-      {props.child}
+      {children}
     </>
   )
 }

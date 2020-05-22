@@ -31,16 +31,16 @@ describe('signupAction', () => {
   });
 
   it('dispatches a signup success', async () => {
-    const signupData = { email: 'email', password: 'password' }
+    const signupResponse = { email: 'email', password: 'password' }
 
-    fetch.mockResponseOnce(JSON.stringify(signupData))
+    fetch.mockResponseOnce(JSON.stringify(signupResponse))
 
     const expectedActions = [
-      { type: SIGNUP_SUCCESS, json: signupData}
+      { type: SIGNUP_SUCCESS, json: signupResponse}
     ]
 
     const store = mockStore()
-    store.dispatch(signupAction(signupData)).then(() => {
+    store.dispatch(signupAction({})).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
 

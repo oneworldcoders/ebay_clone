@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import loginReducer from './reducers/loginReducer'
 import signupReducer from './reducers/signupReducer'
+import productReducer from './reducers/productReducer'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import Datastore from './datastore';
@@ -8,41 +9,26 @@ import Datastore from './datastore';
 const datastore = new Datastore()
 
 export const INITIAL_STATE = {
-  thingsReducer: {
-    things: [{
-      name: 'test',
-      guid: '123'
-    }]
-  },
   loginReducer: {
     login: null,
     loggedin: datastore.get('isLoggedIn'),
-    userdata: datastore.get('userdata'),
+    firstname: datastore.get('firstname'),
     token: datastore.get('token')
   },
   signupReducer: {
     signup: null,
     signuperror: null,
     signedup: false
+  },
+  productReducer: {
+    products: []
   }
 };
-
-const thingsReducer = (state = {}, action) => {
-  switch (action.type) {
-    case 'GET_THINGS_SUCCESS':
-      return {
-        ...state,
-        things: action.json.things,
-      }
-    default:
-      return state;
-  }
-}
 
 const rootReducer = combineReducers({
   loginReducer,
   signupReducer,
-  thingsReducer
+  productReducer,
 })
 
 export default function configureStore() {
