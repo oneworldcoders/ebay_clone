@@ -14,8 +14,8 @@ function Header() {
   const redirect = useSelector(state => state.loginReducer.loginredirect)
   const location = useLocation()
 
-  if(redirect && location.pathname != '/login' ) {
-    return <Redirect to='/login' />
+  if(redirect && location.pathname != '/signin' ) {
+    return <Redirect to='/signin' />
   }
 
   if(isLoggedIn){

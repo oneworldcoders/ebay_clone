@@ -30,7 +30,7 @@ export default function Item(props) {
       />
       <CardMedia
         className={classes.media}
-        image={props.imageUrl}
+        image="https://res.cloudinary.com/opix/image/upload/v1553531583/samples/cloudinary-icon.png"
         title={props.imageTitle}
       />
       <CardContent>
@@ -47,5 +47,5 @@ Item.defaultProps = {
   subheader: '',
   imageUrl: "https://res.cloudinary.com/opix/image/upload/v1553531583/samples/cloudinary-icon.png",
   imageTitle: '',
-  description: ''
+  description: 'No description'
 };

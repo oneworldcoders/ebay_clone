@@ -21,7 +21,7 @@ function App() {
           <Switch>
             <Route exact path="/" render={() =>  <Main> <LandingPage /> </Main> } />
             <Route exact path="/signup" render={() =>  <Main> <SignupPage /> </Main> } />
-            <Route exact path="/login" render={() => <Main> <LoginPage /> </Main> } />
+            <Route exact path="/signin" render={() => <Main> <LoginPage /> </Main> } />
           </Switch>
         </BrowserRouter>
         <ToastContainer />

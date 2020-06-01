@@ -11,7 +11,7 @@ function LoggedOutHeader() {
       </Link>
     </div>
     <div className="auth">
-      <Link to="/login" className="navlink">
+      <Link to="/signin" className="navlink">
       <span id='username'>Login</span>
       </Link>
       <Link to="/signup" className="navlink">
