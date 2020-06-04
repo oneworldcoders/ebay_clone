@@ -7,10 +7,13 @@
 default: &default
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("POSTGRES_USER") { } %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") { } %>
   timeout: 5000
 
 development:
   <<: *default
+  host: <%= ENV.fetch("POSTGRES_HOST") { } %>
   database: ebay_dev_db
 
 # Warning: The database defined as "test" will be erased and
@@ -20,8 +23,6 @@ test:
   <<: *default
   encoding: utf8
   host: localhost
-  username: <%= ENV.fetch("POSTGRES_USER") { } %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD") { } %>
   database: ebay_test_db
 
 production:
