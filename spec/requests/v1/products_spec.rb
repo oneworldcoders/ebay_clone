@@ -14,14 +14,40 @@ RSpec.describe 'products' do
 
   describe 'get products', :type => :request do
     it 'returns an ok status' do
-      get v1_products_path, params: {}, headers: { 'Authorization': "Bearer #{@token}}" }
+      get v1_products_path, params: {}, headers: @header
       expect(response).to have_http_status(200)
     end
 
     it 'returns empty records in the database' do
-      get v1_products_path, params: {}, headers: { 'Authorization': "Bearer #{@token}}" }
-      expected = { products: [] }.to_json
-      expect(response.body).to eq(expected)
+      get v1_products_path, params: {}, headers: @header
+      expected = { 'products' => [] }
+      expect(JSON.parse(response.body)).to include(expected)
+    end
+
+    context 'last_page' do
+      context '10 pages' do
+        before { FactoryBot.create_list(:product, 10) }
+        it 'returns true when more than 5 products and page 1' do
+          get '/v1/products?page=1', params: {}, headers: @header
+          expected = { 'last_page' => true }
+          expect(JSON.parse(response.body)).to include(expected)
+        end
+    
+        it 'returns false when more than 5 products and page 2' do
+          get '/v1/products?page=2', params: {}, headers: @header
+          expected = { 'last_page' => false }
+          expect(JSON.parse(response.body)).to include(expected)
+        end
+      end
+
+      context '5 pages' do
+        it 'returns false when less than 5 products' do
+          FactoryBot.create_list(:product, 4)
+          get '/v1/products', params: {}, headers: @header
+          expected = { 'last_page' => true }
+          expect(JSON.parse(response.body)).to include(expected)
+        end
+      end
     end
 
     it 'returns records in the database' do
