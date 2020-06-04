@@ -1,6 +1,10 @@
 FactoryBot.define do
   factory :product do
-    
+    title { 'title' }
+    subheader {}
+    imageUrl {}
+    imageTitle {}
+    description {}
   end
 
   factory :user do
