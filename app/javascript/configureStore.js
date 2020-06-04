@@ -21,7 +21,9 @@ export const INITIAL_STATE = {
     signedup: false
   },
   productReducer: {
-    products: []
+    products: [],
+    pagenumber: 1,
+    lastpage: true
   }
 };
 

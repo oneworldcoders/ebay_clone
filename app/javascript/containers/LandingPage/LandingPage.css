@@ -14,8 +14,3 @@
   margin: auto;
   margin-top: 2rem;
 }
-.item-container{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
